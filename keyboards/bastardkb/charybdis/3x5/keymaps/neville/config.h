@@ -48,7 +48,7 @@
 #endif // POINTING_DEVICE_ENABLE
 
 #define COMBO_COUNT 2 // Change this number.
-#define COMBO_TERM 65
+#define COMBO_TERM 80
 
 //#define RETRO_SHIFT 500
 #define LAYER_STATE_8BIT
