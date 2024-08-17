@@ -62,30 +62,30 @@ static uint16_t auto_pointer_layer_timer = 0;
 // clang-format off
 /** \brief QWERTY layout (3 rows, 10 columns). */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [LAYER_BASE] = [...](
+  [LAYER_BASE] = LAYOUT_charybdis_3x5(
            KC_Q,      KC_W,       KC_E,        KC_R,              KC_T,              KC_Y,      KC_U,        KC_I,       KC_O,              KC_P, \
     SFT_T(KC_A),      KC_S,       KC_D,        KC_F,       ALT_T(KC_G),      RALT_T(KC_H),      KC_J,        KC_K,       KC_L,   RSFT_T(KC_QUOT), \
            KC_Z,      KC_X,       KC_C,        KC_V,              KC_B,      RCMD_T(KC_N),      KC_M,     KC_COMM,     KC_DOT,    RCTL_T(KC_ENT), \
                                                KC_NO,   RAISE,   LOWER,           KC_BTN1,   KC_BTN2
 ),
 
-  [LAYER_RAISE] = [...]( 
+  [LAYER_RAISE] = LAYOUT_charybdis_3x5( 
     KC_ESC,KC_7,      KC_8,       KC_9,       KC_GRV,          KC_LPRN,           KC_RPRN,    KC_MINS,      KC_EQL,   KC_BSPC,                    \
   SFT_T(KC_TAB),      KC_4,       KC_5,         KC_6,          KC_LALT,    RALT_T(KC_DLR),    KC_AMPR,       KC_AT,   KC_SCLN,   RSFT_T(KC_QUOT), \
     CTL_T(KC_0),      KC_1,       KC_2,         KC_3,   LGUI_T(KC_SPC),   RCMD_T(KC_ASTR),    KC_EXLM,     KC_BSLS,   KC_SLSH,    RCTL_T(KC_ENT), \
                                           KC_NO,   XXXXXXX,    _______,            KC_BTN1,   KC_BTN2
 ),
 
-  [LAYER_LOWER] = [...]( 
+  [LAYER_LOWER] = LAYOUT_charybdis_3x5(
            KC_F9,    KC_F10,     KC_F11,       KC_F12,         KC_TILD,           KC_LBRC,    KC_RBRC,    KC_UNDS,    KC_PLUS,           KC_DEL, \
     SFT_T(KC_F5),     KC_F6,      KC_F7,        KC_F8,  ALT_T(KC_LCMD),   RALT_T(KC_LCBR),    KC_RCBR,    KC_HASH,    KC_COLN,          KC_RSFT, \
     CTL_T(KC_F1),     KC_F2,      KC_F3,        KC_F4,  LGUI_T(KC_SPC),   RCMD_T(KC_PERC),    KC_CIRC,    KC_PIPE,    KC_QUES,   RCTL_T(KC_ENT), \
                                           KC_NO,   XXXXXXX,    _______,           KC_BTN1,    KC_BTN2
 ),
 
-  [LAYER_DUAL] = [...]( 
+  [LAYER_DUAL] = LAYOUT_charybdis_3x5(
          KC_BRID,   KC_BRIU,   C(KC_UP),    LAG(KC_D),        RGB_VAI,            KC_MRWD,     KC_MPLY,   KC_MFFD,     KC_VOLD,         KC_VOLU, \
-  SFT_T(KC_CAPS),   RGB_SAD,    RGB_SAI,      RGB_HUD,        RGB_HUI,               DPI+,        DPI-,     KC_UP,     KC_PGUP,         KC_PGDN, \
+  SFT_T(KC_CAPS),   RGB_SAD,    RGB_SAI,      RGB_HUD,        RGB_HUI,            DPI_MOD,    DPI_RMOD,     KC_UP,     KC_PGUP,         KC_PGDN, \
              Snp,      Snp+,       Snp-,     RGB_RMOD,        RGB_MOD,               DrgT,     KC_LEFT,   KC_DOWN,    KC_RIGHT,   SM_MO(SM_DRG), \
                                         KC_NO,    _______,    _______,            KC_BTN1,     KC_BTN2
 ),
