@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_BASE] = LAYOUT(
            KC_Q,      KC_W,       KC_E,        KC_R,              KC_T,              KC_Y,      KC_U,        KC_I,       KC_O,              KC_P, \
     SFT_T(KC_A),      KC_S,       KC_D,        KC_F,       ALT_T(KC_G),      RALT_T(KC_H),      KC_J,        KC_K,       KC_L,   RSFT_T(KC_QUOT), \
-           KC_Z,      KC_X,       KC_C,        KC_V,      LGUI_T(KC_B),      RCMD_T(KC_N),      KC_M,     KC_COMM,     KC_DOT,    RCTL_T(KC_ENT), \
+           KC_Z,      KC_X,       KC_C,        KC_V,      LGUI_T(KC_B),      RCMD_T(KC_N),      KC_M,     KC_COMM, DRGSCRL_T(KC_DOT),    RCTL_T(KC_ENT), \
                                               RAISE,    RAISE,   LOWER,           KC_BTN1,   KC_BTN2
 ),
 
@@ -290,6 +290,7 @@ void rgb_matrix_update_pwm_buffers(void);
 enum combos {
   RAISE_LOWER_LAYER_DUAL,
   BTN1_BTN2_BTN3,
+  DOT_ENT_DRGSCRL,
 
 
 
@@ -297,9 +298,11 @@ enum combos {
 
 const uint16_t PROGMEM raise_lower_layer_dual[] = { RAISE, LOWER, COMBO_END};
 const uint16_t PROGMEM btn1_btn2_btn3[] = { KC_BTN1, KC_BTN2, COMBO_END};
+const uint16_t PROGMEM DOT_ENT_DRGSCRL[] = { KC_DOT, KC_ENT, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
   [RAISE_LOWER_LAYER_DUAL] = COMBO(raise_lower_layer_dual, MO(LAYER_DUAL)),
   [BTN1_BTN2_BTN3] = COMBO(btn1_btn2_btn3, KC_BTN3),
+  [DOT_ENT_DRGSCRL] = COMBO (DOT_ENT_DRGSCRL, DRGSCRL),
 
 };
