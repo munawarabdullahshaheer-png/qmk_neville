@@ -65,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_BASE] = LAYOUT(
            KC_Q,      KC_W,       KC_E,        KC_R,              KC_T,              KC_Y,      KC_U,        KC_I,       KC_O,              KC_P, \
     SFT_T(KC_A),      KC_S,       KC_D,        KC_F,       ALT_T(KC_G),      RALT_T(KC_H),      KC_J,        KC_K,       KC_L,   RSFT_T(KC_QUOT), \
-           KC_Z,      KC_X,       KC_C,        KC_V,              KC_B,      RCMD_T(KC_N),      KC_M,     KC_COMM,     KC_DOT,    RCTL_T(KC_ENT), \
+           KC_Z,      KC_X,       KC_C,        KC_V,      LGUI_T(KC_B),      RCMD_T(KC_N),      KC_M,     KC_COMM,     KC_DOT,    RCTL_T(KC_ENT), \
                                               RAISE,    RAISE,   LOWER,           KC_BTN1,   KC_BTN2
 ),
 
@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_DUAL] = LAYOUT(
          KC_BRID,   KC_BRIU,   C(KC_UP),    LAG(KC_D),        RGB_VAI,            KC_MRWD,     KC_MPLY,   KC_MFFD,     KC_VOLD,         KC_VOLU, \
   SFT_T(KC_CAPS),   RGB_SAD,    RGB_SAI,      RGB_HUD,        RGB_HUI,            DPI_MOD,    DPI_RMOD,     KC_UP,     KC_PGUP,         KC_PGDN, \
-         SNP_TOG,   S_D_MOD,   S_D_RMOD,     RGB_RMOD,        RGB_MOD,            DRG_TOG,     KC_LEFT,   KC_DOWN,    KC_RIGHT,         XXXXXXX, \
+         SNP_TOG,   S_D_MOD,   S_D_RMOD,     RGB_RMOD,        RGB_MOD,            XXXXXXX,     KC_LEFT,   KC_DOWN,    KC_RIGHT,         DRGSCRL, \
                                       _______,    _______,    _______,            KC_BTN1,     KC_BTN2
 ),
 };
