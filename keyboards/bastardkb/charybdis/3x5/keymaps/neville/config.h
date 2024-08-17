@@ -19,7 +19,7 @@
 #ifdef VIA_ENABLE
 /* VIA configuration. */
 #undef DYNAMIC_KEYMAP_LAYER_COUNT
-#    define DYNAMIC_KEYMAP_LAYER_COUNT 4
+#define DYNAMIC_KEYMAP_LAYER_COUNT 4
 #endif // VIA_ENABLE
 
 #ifndef TAPPING_TERM
@@ -28,27 +28,27 @@
  * If you have a lot of accidental mod activations, crank up the tapping term.
  * See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-term
  */
-#    define TAPPING_TERM 180
+#define TAPPING_TERM 180
 #endif  // TAPPING_TERM
 
 #ifndef __arm__
 /* Disable unused features. */
-#    define NO_ACTION_ONESHOT
+#define NO_ACTION_ONESHOT
 #endif // __arm__
 
 /* Charybdis-specific features. */
 
 #ifdef POINTING_DEVICE_ENABLE
-#    define POINTING_DEVICE_SCROLL_ENABLE
-#    define POINTING_DEVICE_INVERT_V
+#define POINTING_DEVICE_SCROLL_ENABLE
+#define POINTING_DEVICE_INVERT_V
 // Automatically enable the pointer layer when moving the trackball.  See also:
 // - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS`
 // - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD`
 // #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #endif // POINTING_DEVICE_ENABLE
 
-#    define COMBO_COUNT 2 // Change this number.
-#    define COMBO_TERM 75
+#define COMBO_COUNT 2 // Change this number.
+#define COMBO_TERM 75
 
 //#define RETRO_SHIFT 500
 #define LAYER_STATE_8BIT
