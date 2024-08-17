@@ -28,7 +28,7 @@
  * If you have a lot of accidental mod activations, crank up the tapping term.
  * See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-term
  */
-#define TAPPING_TERM 180
+#define TAPPING_TERM 150
 #endif  // TAPPING_TERM
 
 #ifndef __arm__
