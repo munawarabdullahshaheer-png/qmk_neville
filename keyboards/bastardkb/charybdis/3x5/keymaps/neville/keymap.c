@@ -16,11 +16,12 @@
  */
 #include QMK_KEYBOARD_H
 
-/**
+
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    include "timer.h"
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-*/
+
+
 
 enum charybdis_keymap_layers {
   LAYER_BASE = 0,
@@ -28,6 +29,7 @@ enum charybdis_keymap_layers {
   LAYER_RAISE,
   LAYER_DUAL,
 };
+
 /**
 // Automatically enable sniping-mode on the pointer layer.
 #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
