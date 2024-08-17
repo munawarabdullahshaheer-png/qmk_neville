@@ -18,7 +18,8 @@
 
 #ifdef VIA_ENABLE
 /* VIA configuration. */
-#    define DYNAMIC_KEYMAP_LAYER_COUNT 4
+#undef DYNAMIC_KEYMAP_LAYER_COUNT i
+//#    define DYNAMIC_KEYMAP_LAYER_COUNT 4
 #endif // VIA_ENABLE
 
 #ifndef TAPPING_TERM
