@@ -18,7 +18,6 @@
 
 #ifdef VIA_ENABLE
 /* VIA configuration. */
-#undef DYNAMIC_KEYMAP_LAYER_COUNT
 //#    define DYNAMIC_KEYMAP_LAYER_COUNT 4
 #endif // VIA_ENABLE
 
