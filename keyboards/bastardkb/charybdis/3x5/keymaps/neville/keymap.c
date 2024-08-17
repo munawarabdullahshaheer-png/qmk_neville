@@ -89,6 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
              Snp,      Snp+,       Snp-,     RGB_RMOD,        RGB_MOD,            XXXXXXX,     KC_LEFT,   KC_DOWN,    KC_RIGHT,   PM_MO(PM_DRG), \
                                         KC_NO,    _______,    _______,            KC_BTN1,     KC_BTN2
 ),
+};
 /**Conveniencerowshorthands.*/
 //#define _______________DEAD_HALF_ROW_______________ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 //#define ______________HOME_ROW_GACS_L______________ KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX
