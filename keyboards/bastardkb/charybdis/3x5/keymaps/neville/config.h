@@ -31,6 +31,8 @@
 #define TAPPING_TERM 180
 #endif  // TAPPING_TERM
 
+#define MASTER_LEFT
+
 #ifndef __arm__
 /* Disable unused features. */
 #define NO_ACTION_ONESHOT
