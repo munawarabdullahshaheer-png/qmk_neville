@@ -296,7 +296,7 @@ enum combos {
 
 const uint16_t PROGMEM raise_lower_layer_dual[] = { RAISE, LOWER, COMBO_END};
 const uint16_t PROGMEM btn1_btn2_btn3[] = { KC_BTN1, KC_BTN2, COMBO_END};
-const uint16_t PROGMEM dot_ent_drgscrl[] = { KC_DOT, KC_ENT, COMBO_END};
+const uint16_t PROGMEM dot_ent_drgscrl[] = { KC_DOT, RCTL_T(KC_ENT), COMBO_END};
 
 //combo_t key_combos[COMBO_COUNT] = {
   //[RAISE_LOWER_LAYER_DUAL] = COMBO(raise_lower_layer_dual, MO(LAYER_DUAL)),
