@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_DUAL] = LAYOUT(
          KC_BRID,   KC_BRIU,   C(KC_UP),    LAG(KC_D),        RGB_VAI,            KC_MRWD,     KC_MPLY,   KC_MFFD,     KC_VOLD,         KC_VOLU, \
   SFT_T(KC_CAPS),   RGB_SAD,    RGB_SAI,      RGB_HUD,        RGB_HUI,            DPI_MOD,    DPI_RMOD,     KC_UP,     KC_PGUP,         KC_PGDN, \
-         SNIPING,   S_D_MOD,   S_D_RMOD,      XXXXXXX,        XXXXXXX,            DRGSCRL,     KC_LEFT,   KC_DOWN,    KC_RIGHT,         DRG_TOG, \
+         SNIPING,   S_D_MOD,   S_D_RMOD,      XXXXXXX,        DRGSCRL,            DRGSCRL,     KC_LEFT,   KC_DOWN,    KC_RIGHT,         DRG_TOG, \
                                       _______,    _______,    _______,            KC_BTN1,     KC_BTN2
 ),
 };
