@@ -64,27 +64,33 @@ enum {
     TD_DRAGSCROLL,
 };
 
-void td_dragscroll_finished(qk_tap_dance_state_t *state, void *user_data) {
+// Tap Dance Functions
+void td_dragscroll_finished(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         tap_code(KC_DOT);
     } else if (state->count > 1) {
+        // Use your function to enable drag scroll here
         charybdis_set_pointer_dragscroll_enabled(true);
     }
 }
 
-void td_dragscroll_reset(qk_tap_dance_state_t *state, void *user_data) {
+void td_dragscroll_reset(tap_dance_state_t *state, void *user_data) {
+    // Disable drag scroll when releasing the key
     charybdis_set_pointer_dragscroll_enabled(false);
 }
 
+// Process Record User Function
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TD(TD_DRAGSCROLL):
+            // Handle tap dance actions
             if (record->event.pressed) {
-                qk_tap_dance_action(state, user_data);
+                // This will automatically call the finished function when the key is released
+                register_code(KC_NO);
             }
-            return false;
+            return false;  // Prevent further processing of this keycode
     }
-    return true;
+    return true; // Process all other keycodes
 }
 
 
