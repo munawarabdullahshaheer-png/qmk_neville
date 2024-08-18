@@ -28,7 +28,7 @@
  * If you have a lot of accidental mod activations, crank up the tapping term.
  * See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-term
  */
-#define TAPPING_TERM 150
+#define TAPPING_TERM 200
 #endif  // TAPPING_TERM
 
 #ifndef __arm__
@@ -48,7 +48,7 @@
 #endif // POINTING_DEVICE_ENABLE
 
 #define COMBO_COUNT 2 // Change this number.
-#define COMBO_TERM 80
+#define COMBO_TERM 95
 
 //#define RETRO_SHIFT 500
 #define LAYER_STATE_8BIT
