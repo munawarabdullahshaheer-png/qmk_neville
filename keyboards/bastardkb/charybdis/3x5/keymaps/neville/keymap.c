@@ -58,8 +58,6 @@ static uint16_t auto_pointer_layer_timer = 0;
 #    define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
-//Tap Dance
-
 enum {
     TD_DRAGSCROLL,
 };
@@ -78,6 +76,11 @@ void td_dragscroll_reset(tap_dance_state_t *state, void *user_data) {
     // Disable drag scroll when releasing the key
     charybdis_set_pointer_dragscroll_enabled(false);
 }
+
+// Define the tap dance actions
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_DRAGSCROLL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_dragscroll_finished, td_dragscroll_reset),
+};
 
 // Process Record User Function
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
