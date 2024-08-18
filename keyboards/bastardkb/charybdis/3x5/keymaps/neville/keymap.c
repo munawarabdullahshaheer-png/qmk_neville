@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
-#include "charybdis.h" // Include your custom header for drag-scroll functions
-
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    include "timer.h"
@@ -60,43 +58,34 @@ static uint16_t auto_pointer_layer_timer = 0;
 #    define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
-// Tap Dance Enum
+//Tap Dance
+
 enum {
-    TD_DRAGSCROLL = 0, // Tap Dance index
+    TD_DRAGSCROLL,
 };
 
-// Function for tap dance completion
-void dragscroll_tap_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
+void td_dragscroll_finished(qk_tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        // Send KC_DOT on single tap
-        register_code(KC_DOT);
-        unregister_code(KC_DOT);
+        tap_code(KC_DOT);
     } else if (state->count > 1) {
-        // Enable drag-scroll on hold
         charybdis_set_pointer_dragscroll_enabled(true);
     }
 }
 
-// Function for tap dance reset
-void dragscroll_tap_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
-    // Disable drag-scroll mode when released
+void td_dragscroll_reset(qk_tap_dance_state_t *state, void *user_data) {
     charybdis_set_pointer_dragscroll_enabled(false);
 }
 
-// Define the tap dance actions
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_DRAGSCROLL] = ACTION_TAP_DANCE_FN_ADVANCED(dragscroll_tap_dance_finished, dragscroll_tap_dance_reset),
-};
-
-// Define your keymap layout
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [LAYER_BASE] = LAYOUT(
-        // Other keys...
-        TD(TD_DRAGSCROLL), // Use the tap dance key where desired
-        // Other keys...
-    ),
-    // Define other layers if needed...
-};
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TD(TD_DRAGSCROLL):
+            if (record->event.pressed) {
+                qk_tap_dance_action(state, user_data);
+            }
+            return false;
+    }
+    return true;
+}
 
 
 // clang-format off
