@@ -58,43 +58,6 @@ static uint16_t auto_pointer_layer_timer = 0;
 #    define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
-enum {
-    TD_DRAGSCROLL,
-};
-
-// Tap Dance Functions
-void td_dragscroll_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        tap_code(KC_DOT);  // When tapped once, send KC_DOT
-    } else if (state->count > 1) {
-        charybdis_set_pointer_dragscroll_enabled(true);  // Enable drag scroll on double tap
-    }
-}
-
-void td_dragscroll_reset(tap_dance_state_t *state, void *user_data) {
-    charybdis_set_pointer_dragscroll_enabled(false);  // Disable drag scroll on key release
-}
-
-// Define the tap dance actions
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_DRAGSCROLL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, td_dragscroll_finished, td_dragscroll_reset),
-};
-
-// Process Record User Function
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    // Handle tap dance actions
-    if (keycode == TD(TD_DRAGSCROLL)) {
-        if (record->event.pressed) {
-            // This will automatically call the finished function when the key is released
-            register_code(KC_NO);
-        }
-        return false;  // Prevent further processing of this keycode
-    }
-    return true; // Process all other keycodes
-}
-
-
-
 // clang-format off
 /** \brief QWERTY layout (3 rows, 10 columns). */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -326,18 +289,18 @@ void rgb_matrix_update_pwm_buffers(void);
 enum combos {
   RAISE_LOWER_LAYER_DUAL,
   BTN1_BTN2_BTN3,
-  //DOT_ENT_DRGSCRL,
+  DOT_ENT_DRGSCRL,
 
 };
 
 const uint16_t PROGMEM raise_lower_layer_dual[] = { RAISE, LOWER, COMBO_END};
 const uint16_t PROGMEM btn1_btn2_btn3[] = { KC_BTN1, KC_BTN2, COMBO_END};
-//const uint16_t PROGMEM dot_ent_drgscrl[] = { KC_DOT, KC_ENT, COMBO_END};
+const uint16_t PROGMEM dot_ent_drgscrl[] = { KC_DOT, KC_ENT, COMBO_END};
 
 combo_t key_combos[] = {
 COMBO(raise_lower_layer_dual, MO(LAYER_DUAL)),
 COMBO(btn1_btn2_btn3, KC_BTN3),
-//COMBO(dot_ent_drgscrl, DRGSCRL),
+COMBO(dot_ent_drgscrl, DRGSCRL),
 
 };
 
