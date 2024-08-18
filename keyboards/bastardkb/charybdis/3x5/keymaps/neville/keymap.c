@@ -328,18 +328,18 @@ void rgb_matrix_update_pwm_buffers(void);
 enum combos {
   RAISE_LOWER_LAYER_DUAL,
   BTN1_BTN2_BTN3,
-  DOT_ENT_DRGSCRL,
+  //DOT_ENT_DRGSCRL,
 
 };
 
 const uint16_t PROGMEM raise_lower_layer_dual[] = { RAISE, LOWER, COMBO_END};
 const uint16_t PROGMEM btn1_btn2_btn3[] = { KC_BTN1, KC_BTN2, COMBO_END};
-const uint16_t PROGMEM dot_ent_drgscrl[] = { KC_DOT, KC_ENT, COMBO_END};
+//const uint16_t PROGMEM dot_ent_drgscrl[] = { KC_DOT, KC_ENT, COMBO_END};
 
 combo_t key_combos[] = {
 COMBO(raise_lower_layer_dual, MO(LAYER_DUAL)),
 COMBO(btn1_btn2_btn3, KC_BTN3),
-COMBO(dot_ent_drgscrl, DRGSCRL),
+//COMBO(dot_ent_drgscrl, DRGSCRL),
 
 };
 
