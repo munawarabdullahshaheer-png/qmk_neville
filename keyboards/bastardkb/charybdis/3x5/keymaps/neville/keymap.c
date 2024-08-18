@@ -65,7 +65,7 @@ enum {
 };
 
 // Tap dance functions
-void dance_dot_finished(qk_tap_dance_state_t *state, void *user_data) {
+void dance_dot_finished(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         // Tap: Send KC_DOT
         register_code(KC_DOT);
@@ -76,7 +76,7 @@ void dance_dot_finished(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-void dance_dot_reset(qk_tap_dance_state_t *state, void *user_data) {
+void dance_dot_reset(tap_dance_state_t *state, void *user_data) {
     unregister_code(DRGSCRL); // Stop dragscroll
 }
 
@@ -311,13 +311,13 @@ void rgb_matrix_update_pwm_buffers(void);
 enum combos {
   RAISE_LOWER_LAYER_DUAL,
   BTN1_BTN2_BTN3,
-  DOT_ENT_DRGSCRL,
+  //DOT_ENT_DRGSCRL,
 
 };
 
 const uint16_t PROGMEM raise_lower_layer_dual[] = { RAISE, LOWER, COMBO_END};
 const uint16_t PROGMEM btn1_btn2_btn3[] = { KC_BTN1, KC_BTN2, COMBO_END};
-const uint16_t PROGMEM dot_ent_drgscrl[] = { KC_DOT, KC_ENT, COMBO_END};
+//const uint16_t PROGMEM dot_ent_drgscrl[] = { KC_DOT, KC_ENT, COMBO_END};
 
 //combo_t key_combos[COMBO_COUNT] = {
   //[RAISE_LOWER_LAYER_DUAL] = COMBO(raise_lower_layer_dual, MO(LAYER_DUAL)),
@@ -326,7 +326,7 @@ const uint16_t PROGMEM dot_ent_drgscrl[] = { KC_DOT, KC_ENT, COMBO_END};
 combo_t key_combos[] = {
 COMBO(raise_lower_layer_dual, MO(LAYER_DUAL)),
 COMBO(btn1_btn2_btn3, KC_BTN3),
-COMBO(dot_ent_drgscrl, DRGSCRL),
+//COMBO(dot_ent_drgscrl, DRGSCRL),
 
 };
 
