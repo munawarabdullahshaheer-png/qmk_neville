@@ -31,6 +31,9 @@
 #define TAPPING_TERM 150
 #endif  // TAPPING_TERM
 
+#define TAPPING_TERM 175
+#define TAPPING_TERM_PER_KEY
+
 #ifndef __arm__
 /* Disable unused features. */
 #define NO_ACTION_ONESHOT
