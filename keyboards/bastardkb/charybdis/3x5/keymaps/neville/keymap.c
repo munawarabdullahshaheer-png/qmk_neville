@@ -65,16 +65,14 @@ enum {
 // Tap Dance Functions
 void td_dragscroll_finished(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        tap_code(KC_DOT);
+        tap_code(KC_DOT);  // When tapped once, send KC_DOT
     } else if (state->count > 1) {
-        // Use your function to enable drag scroll here
-        charybdis_set_pointer_dragscroll_enabled(true);
+        charybdis_set_pointer_dragscroll_enabled(true);  // Enable drag scroll on double tap
     }
 }
 
 void td_dragscroll_reset(tap_dance_state_t *state, void *user_data) {
-    // Disable drag scroll when releasing the key
-    charybdis_set_pointer_dragscroll_enabled(false);
+    charybdis_set_pointer_dragscroll_enabled(false);  // Disable drag scroll on key release
 }
 
 // Define the tap dance actions
@@ -84,17 +82,17 @@ tap_dance_action_t tap_dance_actions[] = {
 
 // Process Record User Function
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case TD(TD_DRAGSCROLL):
-            // Handle tap dance actions
-            if (record->event.pressed) {
-                // This will automatically call the finished function when the key is released
-                register_code(KC_NO);
-            }
-            return false;  // Prevent further processing of this keycode
+    // Handle tap dance actions
+    if (keycode == TD(TD_DRAGSCROLL)) {
+        if (record->event.pressed) {
+            // This will automatically call the finished function when the key is released
+            register_code(KC_NO);
+        }
+        return false;  // Prevent further processing of this keycode
     }
     return true; // Process all other keycodes
 }
+
 
 
 // clang-format off
