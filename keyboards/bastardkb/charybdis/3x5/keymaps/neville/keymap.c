@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
+#include "charybdis.h" // Include your custom header for drag-scroll functions
 
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
@@ -59,13 +60,52 @@ static uint16_t auto_pointer_layer_timer = 0;
 #    define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
+// Tap Dance Enum
+enum {
+    TD_DRAGSCROLL = 0, // Tap Dance index
+};
+
+// Function for tap dance completion
+void dragscroll_tap_dance_finished(qk_tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        // Send KC_DOT on single tap
+        register_code(KC_DOT);
+        unregister_code(KC_DOT);
+    } else if (state->count > 1) {
+        // Enable drag-scroll on hold
+        charybdis_set_pointer_dragscroll_enabled(true);
+    }
+}
+
+// Function for tap dance reset
+void dragscroll_tap_dance_reset(qk_tap_dance_state_t *state, void *user_data) {
+    // Disable drag-scroll mode when released
+    charybdis_set_pointer_dragscroll_enabled(false);
+}
+
+// Define the tap dance actions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_DRAGSCROLL] = ACTION_TAP_DANCE_FN_ADVANCED(dragscroll_tap_dance_finished, dragscroll_tap_dance_reset),
+};
+
+// Define your keymap layout
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    [LAYER_BASE] = LAYOUT(
+        // Other keys...
+        TD(TD_DRAGSCROLL), // Use the tap dance key where desired
+        // Other keys...
+    ),
+    // Define other layers if needed...
+};
+
+
 // clang-format off
 /** \brief QWERTY layout (3 rows, 10 columns). */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_BASE] = LAYOUT(
            KC_Q,      KC_W,       KC_E,        KC_R,              KC_T,              KC_Y,      KC_U,        KC_I,        KC_O,              KC_P, \
     SFT_T(KC_A),      KC_S,       KC_D,        KC_F,       ALT_T(KC_G),      RALT_T(KC_H),      KC_J,        KC_K,        KC_L,   RSFT_T(KC_QUOT), \
-           KC_Z,      KC_X,       KC_C,        KC_V,      LGUI_T(KC_B),      RCMD_T(KC_N),      KC_M,     KC_COMM,      KC_DOT,            KC_ENT, \
+           KC_Z,      KC_X,       KC_C,        KC_V,      LGUI_T(KC_B),      RCMD_T(KC_N),      KC_M,     KC_COMM, TD(TD_DRAGSCROLL),            KC_ENT, \
                                               RAISE,    RAISE,   LOWER,           KC_BTN1,   KC_BTN2
 ),
 
