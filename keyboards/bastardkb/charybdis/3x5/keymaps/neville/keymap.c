@@ -79,8 +79,7 @@ typedef struct {
 
 // Tap dance enums
 enum {
-    X_CTL,
-    SOME_OTHER_DANCE
+    B_SPC,
 };
 
 td_state_t cur_dance(tap_dance_state_t *state);
