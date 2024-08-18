@@ -64,6 +64,20 @@ enum {
     TD_DOT_DRAG,
 };
 
+// Function to start dragscroll
+void start_dragscroll(void) {
+    // Example: Register mouse movement or other keycodes needed for dragscroll
+    // You can adjust the following lines according to your dragscroll implementation
+    register_code(KC_LSFT); // Press the Shift key as an example
+    // Add any other keycodes or actions for dragscroll
+}
+
+// Function to stop dragscroll
+void stop_dragscroll(void) {
+    unregister_code(KC_LSFT); // Release the Shift key
+    // Optionally, reset any other actions or states
+}
+
 // Tap dance functions
 void dance_dot_finished(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
@@ -72,13 +86,28 @@ void dance_dot_finished(tap_dance_state_t *state, void *user_data) {
         unregister_code(KC_DOT);
     } else if (state->count > 1) {
         // Hold: Start dragscroll
-        register_code(DRGSCRL); // Start dragscroll
+        start_dragscroll(); // Start dragscroll
     }
 }
 
 void dance_dot_reset(tap_dance_state_t *state, void *user_data) {
-    unregister_code(DRGSCRL); // Stop dragscroll
+    // Stop dragscroll
+    stop_dragscroll(); // Stop dragscroll
 }
+
+// Tap dance definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_DOT_DRAG] = ACTION_TAP_DANCE_FN_ADVANCED(dance_dot_finished, dance_dot_reset),
+};
+
+// Keymap definition
+const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    [0] = LAYOUT(
+        // Your keymap layout here...
+        TD(TD_DOT_DRAG), // Use the tap dance key where needed
+        // other keys...
+    ),
+};
 
 // clang-format off
 /** \brief QWERTY layout (3 rows, 10 columns). */
