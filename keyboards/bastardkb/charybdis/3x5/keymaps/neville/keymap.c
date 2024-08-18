@@ -71,13 +71,13 @@ void dance_dot_finished(tap_dance_state_t *state, void *user_data) {
         unregister_code(KC_DOT);
     } else {
         // Hold: Start dragscroll
-        register_code(DRAGSCROLL_MODE); // Ensure DRAGSCROLL_MODE is a valid keycode
+        register_code(DRGSCRL); // Ensure DRAGSCROLL_MODE is a valid keycode
     }
 }
 
 void dance_dot_reset(tap_dance_state_t *state, void *user_data) {
     // Stop dragscroll
-    unregister_code(DRAGSCROLL_MODE);
+    unregister_code(DRGSCRL);
 }
 
 // Tap dance definitions
