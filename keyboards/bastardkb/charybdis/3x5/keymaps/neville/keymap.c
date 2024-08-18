@@ -59,47 +59,13 @@ static uint16_t auto_pointer_layer_timer = 0;
 #    define SNIPING KC_NO
 #endif // !POINTING_DEVICE_ENABLE
 
-//Tap Dance
-enum {
-    TD_DOT_DRAG,
-};
-
-void dance_dot_finished(tap_dance_state_t *state, void *user_data) {
-    if (state->count == 1) {
-        // Single tap: Send KC_DOT
-        register_code(KC_DOT);
-        unregister_code(KC_DOT);
-    } else {
-        // Hold: Start dragscroll
-        register_code(DRGSCRL); // Ensure DRAGSCROLL_MODE is a valid keycode
-    }
-}
-
-void dance_dot_reset(tap_dance_state_t *state, void *user_data) {
-    // Stop dragscroll
-    unregister_code(DRGSCRL);
-}
-
-// Tap dance definitions
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_DOT_DRAG] = ACTION_TAP_DANCE_FN_ADVANCED(dance_dot_finished, dance_dot_reset, NULL),
-};
-
-// Keymap definition
-const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT(
-        TD(TD_DOT_DRAG), // Place the tap dance key here
-        // other keys...
-    ),
-};
-
 // clang-format off
 /** \brief QWERTY layout (3 rows, 10 columns). */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_BASE] = LAYOUT(
            KC_Q,      KC_W,       KC_E,        KC_R,              KC_T,              KC_Y,      KC_U,        KC_I,        KC_O,              KC_P, \
     SFT_T(KC_A),      KC_S,       KC_D,        KC_F,       ALT_T(KC_G),      RALT_T(KC_H),      KC_J,        KC_K,        KC_L,   RSFT_T(KC_QUOT), \
-           KC_Z,      KC_X,       KC_C,        KC_V,      LGUI_T(KC_B),      RCMD_T(KC_N),      KC_M,     KC_COMM, TD(TD_DOT_DRAG),            KC_ENT, \
+           KC_Z,      KC_X,       KC_C,        KC_V,      LGUI_T(KC_B),      RCMD_T(KC_N),      KC_M,     KC_COMM,      KC_DOT,            KC_ENT, \
                                               RAISE,    RAISE,   LOWER,           KC_BTN1,   KC_BTN2
 ),
 
