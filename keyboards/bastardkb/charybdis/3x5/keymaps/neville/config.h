@@ -47,8 +47,8 @@
 // #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #endif // POINTING_DEVICE_ENABLE
 
-#define COMBO_COUNT 2 // Change this number.
-#define COMBO_TERM 110
+#define COMBO_COUNT 3 // Change this number.
+#define COMBO_TERM 120
 
 //#define RETRO_SHIFT 500
 #define LAYER_STATE_8BIT
