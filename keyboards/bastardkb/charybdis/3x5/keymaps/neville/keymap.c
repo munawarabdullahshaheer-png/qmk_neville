@@ -102,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
   [LAYER_RAISE] = LAYOUT( 
-         KC_ESC,      KC_7,      KC_8,       KC_9,       KC_GRV,          KC_LPRN,           KC_RPRN,    KC_MINS,      KC_EQL,           KC_BSPC, \
+         KC_ESC,      KC_7,       KC_8,         KC_9,           KC_GRV,           KC_LPRN,    KC_RPRN,     KC_MINS,    KC_EQL,           KC_BSPC, \
   SFT_T(KC_TAB),      KC_4,       KC_5,         KC_6,          KC_LALT,            KC_DLR,    KC_AMPR,       KC_AT,   KC_SCLN,   RSFT_T(KC_QUOT), \
     CTL_T(KC_0),      KC_1,       KC_2,         KC_3,           KC_SPC,           KC_ASTR,    KC_EXLM,     KC_BSLS,   KC_SLSH,            KC_ENT, \
                                         XXXXXXX,   XXXXXXX,    _______,           KC_BTN1,   KC_BTN2
@@ -118,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_DUAL] = LAYOUT(
          KC_BRID,   KC_BRIU,   C(KC_UP),    LAG(KC_D),        RGB_VAI,            KC_MRWD,     KC_MPLY,   KC_MFFD,     KC_VOLD,         KC_VOLU, \
   SFT_T(KC_CAPS),   RGB_SAD,    RGB_SAI,      RGB_HUD,        RGB_HUI,            DPI_MOD,    DPI_RMOD,     KC_UP,     KC_PGUP,         KC_PGDN, \
-         SNIPING,   S_D_MOD,   S_D_RMOD,      XXXXXXX,        DRGSCRL,            DRGSCRL,     KC_LEFT,   KC_DOWN,    KC_RIGHT,         DRG_TOG, \
+         SNIPING,   S_D_MOD,   S_D_RMOD,        DT_UP,        DT_DOWN,            DT_PRNT,     KC_LEFT,   KC_DOWN,    KC_RIGHT,         DRG_TOG, \
                                       _______,    _______,    _______,            KC_BTN1,     KC_BTN2
 ),
 };
