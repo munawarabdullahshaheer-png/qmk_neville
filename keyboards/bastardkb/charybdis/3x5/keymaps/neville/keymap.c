@@ -64,35 +64,21 @@ enum {
     TD_DOT_DRAG,
 };
 
-// Function to start dragscroll
-void start_dragscroll(void) {
-    // Example: Register mouse movement or other keycodes needed for dragscroll
-    // You can adjust the following lines according to your dragscroll implementation
-    register_code(KC_LSFT); // Press the Shift key as an example
-    // Add any other keycodes or actions for dragscroll
-}
-
-// Function to stop dragscroll
-void stop_dragscroll(void) {
-    unregister_code(KC_LSFT); // Release the Shift key
-    // Optionally, reset any other actions or states
-}
-
 // Tap dance functions
 void dance_dot_finished(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
-        // Tap: Send KC_DOT
+        // Single tap: Send KC_DOT
         register_code(KC_DOT);
         unregister_code(KC_DOT);
     } else if (state->count > 1) {
         // Hold: Start dragscroll
-        start_dragscroll(); // Start dragscroll
+        register_code(DRGSCRL); // Start dragscroll
     }
 }
 
 void dance_dot_reset(tap_dance_state_t *state, void *user_data) {
     // Stop dragscroll
-    stop_dragscroll(); // Stop dragscroll
+    unregister_code(DRGSCRL); // Stop dragscroll
 }
 
 // Tap dance definitions
