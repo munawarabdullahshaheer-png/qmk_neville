@@ -38,21 +38,6 @@
 
 /* Charybdis-specific features. */
 
-//adding trackpad
-// Pointing device configuration
-#define POINTING_DEVICE_ROTATION_90
-#define POINTING_DEVICE_ROTATION_90_SECONDARY
-#define POINTING_DEVICE_RIGHT
-#define SPLIT_POINTING_ENABLE
-#define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
-
-// Cirque Trackpad Configuration (Left Side)
-#define CIRQUE_PINNACLE_ADDR 0x2A
-#define CIRQUE_PINNACLE_TAP_ENABLE
-#define I2C_SCL_PIN D3
-#define I2C_SDA_PIN D2
-// End of trackpad
-
 #ifdef POINTING_DEVICE_ENABLE
 #define POINTING_DEVICE_SCROLL_ENABLE
 #define POINTING_DEVICE_INVERT_V
@@ -80,3 +65,15 @@
 
 //#define CHARYBDIS_DRAGSCROLL_REVERSE_X
 #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
+
+// I2C Configuration
+#define I2C_DRIVER I2CD1
+#define I2C1_SCL_PIN D3
+#define I2C1_SDA_PIN D2
+#define I2C1_SCL_PAL_MODE 4
+#define I2C1_SDA_PAL_MODE 4
+#define I2C1_TIMINGR_PRESC 2U
+#define I2C1_TIMINGR_SCLDEL 1U
+#define I2C1_TIMINGR_SDADEL 0U
+#define I2C1_TIMINGR_SCLH 9U
+#define I2C1_TIMINGR_SCLL 26U
