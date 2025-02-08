@@ -11,6 +11,7 @@ SPLIT_POINTING_ENABLE = yes
 
 # Enable I2C
 I2C_DRIVER_ENABLE = yes
+QUANTUM_LIB_SRC += i2c_master.c
 
 # Debug options (uncomment if needed)
 # CONSOLE_ENABLE = yes
