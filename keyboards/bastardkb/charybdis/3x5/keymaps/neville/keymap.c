@@ -21,7 +21,6 @@
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 
-
 enum charybdis_keymap_layers {
 LAYER_BASE = 0,
 LAYER_LOWER,
