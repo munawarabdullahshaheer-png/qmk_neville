@@ -61,6 +61,25 @@
     // Adjust these values as needed
     #define CIRQUE_PINNACLE_POSITION_MODE CIRQUE_PINNACLE_ABSOLUTE_MODE
     #define CIRQUE_PINNACLE_DIAMETER_MM 40
+
+    // PMW3360 DPI config
+    #define PMW33XX_CPI 2000
+    #define PMW33XX_CPI_STEP 100
+    #define PMW33XX_CPI_MIN 100
+    #define PMW33XX_CPI_MAX 12000
+
+    // Additional pointing device settings
+    #define POINTING_DEVICE_TASK_THROTTLE_MS 1  // Adjust for performance
+    #define POINTING_DEVICE_MOTION_PIN GP26    // Adjust based on your wiring
+    #define POINTING_DEVICE_ROTATION_270       // Adjust based on orientation
+
+    // Scrolling settings
+    #define SCROLL_DIVISOR_H 4
+    #define SCROLL_DIVISOR_V 4
+
+    // Sensor specific settings
+    #define CIRQUE_PINNACLE_CURVED_OVERLAY
+    #define CIRQUE_PINNACLE_POSITION_MODE CIRQUE_PINNACLE_ABSOLUTE_MODE
 #endif // POINTING_DEVICE_ENABLE
 
 #define COMBO_COUNT 3 // Change this number.

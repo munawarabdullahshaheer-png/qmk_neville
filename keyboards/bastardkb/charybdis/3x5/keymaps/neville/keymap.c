@@ -131,47 +131,77 @@ return state;
 #    endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER
 
 void pointing_device_init_kb(void) {
-    // Initialize both pointing devices
     if (is_keyboard_left()) {
         cirque_pinnacle_init();
     }
     pointing_device_init_user();
 }
 
-report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
+report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
     if (is_keyboard_left()) {
-        // Process left side (Cirque trackpad)
-        report_mouse_t cirque_report = cirque_pinnacle_get_report();
-        left_report.x = cirque_report.y;  // Swap x/y due to 90 degree rotation
-        left_report.y = -cirque_report.x;
-        left_report.buttons = cirque_report.buttons;
+        // Left side - Cirque trackpad
+        mouse_report = cirque_pinnacle_get_report(mouse_report);
+        // Apply rotation and inversion
+        int8_t x = mouse_report.y;
+        int8_t y = -mouse_report.x;
+        mouse_report.x = x;
+        mouse_report.y = y;
     } else {
-        // Process right side (PMW3360)
-        report_mouse_t pmw_report = pmw33xx_get_report();
-        right_report.x = -pmw_report.x;  // Invert x to match expected direction
-        right_report.y = pmw_report.y;
-        right_report.buttons = pmw_report.buttons;
+        // Right side - PMW3360
+        mouse_report = pmw33xx_get_report(mouse_report);
+        // Invert X axis for right side
+        mouse_report.x = -mouse_report.x;
     }
 
-    return pointing_device_task_combined_user(left_report, right_report);
+    pointing_device_handle_shared_button(&mouse_report);
+    pointing_device_handle_buttons(&mouse_report);
+    pointing_device_handle_scrolling(&mouse_report);
+
+    return pointing_device_task_user(mouse_report);
 }
 
-report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
-    report_mouse_t report = {0};
+static void pointing_device_handle_shared_button(report_mouse_t* report) {
+    static uint16_t shared_button_timer = 0;
+    static bool shared_button_active = false;
 
-    // Combine the reports
-    report.x = pointing_device_combine_value(left_report.x, right_report.x);
-    report.y = pointing_device_combine_value(left_report.y, right_report.y);
-    report.h = pointing_device_combine_value(left_report.h, right_report.h);
-    report.v = pointing_device_combine_value(left_report.v, right_report.v);
-    report.buttons = left_report.buttons | right_report.buttons;
+    if (timer_elapsed(shared_button_timer) > 100) {  // Adjust debounce time as needed
+        shared_button_active = false;
+    }
 
-    return report;
+    // Example of shared button handling - adjust as needed
+    if (!shared_button_active && (report->buttons & MOUSE_BTN1)) {
+        shared_button_timer = timer_read();
+        shared_button_active = true;
+    }
 }
 
-static int8_t pointing_device_combine_value(int8_t left_value, int8_t right_value) {
-    int16_t combined = (int16_t)left_value + (int16_t)right_value;
-    return (combined > 127) ? 127 : ((combined < -127) ? -127 : combined);
+static void pointing_device_handle_buttons(report_mouse_t* report) {
+    // Add any button processing logic here
+    // For example, implementing drag-scroll toggle
+    static bool drag_scroll = false;
+    if (IS_LAYER_ON(LAYER_DUAL) && (report->buttons & MOUSE_BTN1)) {
+        drag_scroll = !drag_scroll;
+        report->buttons &= ~MOUSE_BTN1;  // Clear the button press
+    }
+}
+
+static void pointing_device_handle_scrolling(report_mouse_t* report) {
+    // Add scrolling behavior here
+    static bool scrolling = false;
+    if (IS_LAYER_ON(LAYER_DUAL)) {
+        scrolling = true;
+        report->h = report->x / 4;  // Adjust divisor to control scroll speed
+        report->v = report->y / 4;
+        report->x = 0;
+        report->y = 0;
+    } else {
+        scrolling = false;
+    }
+}
+
+// Optional: Implement this if you need custom user handling
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    return mouse_report;
 }
 #endif
 
