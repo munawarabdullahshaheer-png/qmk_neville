@@ -1,19 +1,19 @@
 /**
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+* Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #pragma once
 
 #ifdef VIA_ENABLE
@@ -24,10 +24,10 @@
 
 #ifndef TAPPING_TERM
 /**
- * \brief Configure the global tapping term (default: 200ms).
- * If you have a lot of accidental mod activations, crank up the tapping term.
- * See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-term
- */
+* \brief Configure the global tapping term (default: 200ms).
+* If you have a lot of accidental mod activations, crank up the tapping term.
+* See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-term
+*/
 #define TAPPING_TERM 200
 #endif  // TAPPING_TERM
 
@@ -65,25 +65,3 @@
 
 //#define CHARYBDIS_DRAGSCROLL_REVERSE_X
 #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
-
-// I2C Configuration for RP2040
-#define I2C_DRIVER I2C1
-#define I2C1_SDA_PIN GP2  // Use GP2 instead of D2
-#define I2C1_SCL_PIN GP3  // Use GP3 instead of D3
-
-// ChibiOS specific I2C settings
-#define I2C1_TIMINGR_PRESC   0U
-#define I2C1_TIMINGR_SCLDEL  3U
-#define I2C1_TIMINGR_SDADEL  1U
-#define I2C1_TIMINGR_SCLH    3U
-#define I2C1_TIMINGR_SCLL    9U
-
-// Cirque Trackpad Configuration
-#define CIRQUE_PINNACLE_ADDR 0x2A
-#define CIRQUE_PINNACLE_TAP_ENABLE
-#define CIRQUE_PINNACLE_SECONDARY_TAP_ENABLE
-#define POINTING_DEVICE_ROTATION_90
-#define POINTING_DEVICE_ROTATION_90_SECONDARY
-
-// Add this with your other Cirque configurations
-#define CIRQUE_PINNACLE_POSITION_MODE CIRQUE_PINNACLE_ABSOLUTE_MODE
