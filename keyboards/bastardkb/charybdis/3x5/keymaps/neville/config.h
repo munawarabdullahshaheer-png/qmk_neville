@@ -38,17 +38,20 @@
 
 /* Charybdis-specific features. */
 
-// Split keyboard settings
+//adding trackpad
+// Pointing device configuration
+#define POINTING_DEVICE_ROTATION_90
+#define POINTING_DEVICE_ROTATION_90_SECONDARY
+#define POINTING_DEVICE_RIGHT
 #define SPLIT_POINTING_ENABLE
-#define POINTING_DEVICE_COMBINED
+#define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
 
 // Cirque Trackpad Configuration (Left Side)
-#define CIRQUE_PINNACLE_ADDR 0x2A  // Default I2C address
-#define CIRQUE_PINNACLE_POSITION_MODE CIRQUE_PINNACLE_ABSOLUTE_MODE
-#define CIRQUE_PINNACLE_DIAMETER_MM 40  // Adjust based on your trackpad size
-#define I2C_SCL_PIN D3   // SCL pin on Elite-C holder
-#define I2C_SDA_PIN D2   // SDA pin on Elite-C holder
-#define CIRQUE_PINNACLE_TAP_ENABLE true
+#define CIRQUE_PINNACLE_ADDR 0x2A
+#define CIRQUE_PINNACLE_TAP_ENABLE
+#define I2C_SCL_PIN D3
+#define I2C_SDA_PIN D2
+// End of trackpad
 
 #ifdef POINTING_DEVICE_ENABLE
 #define POINTING_DEVICE_SCROLL_ENABLE
