@@ -68,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                               RAISE,    RAISE,   LOWER,           KC_BTN1,   KC_BTN2
 ),
 
-  [LAYER_RAISE] = LAYOUT( 
+  [LAYER_RAISE] = LAYOUT(
          KC_ESC,      KC_7,       KC_8,         KC_9,           KC_GRV,           KC_LPRN,    KC_RPRN,     KC_MINS,     KC_EQL,           KC_BSPC, \
   SFT_T(KC_TAB),      KC_4,       KC_5,         KC_6,          KC_LALT,            KC_DLR,    KC_AMPR,       KC_AT,    KC_SCLN,   RSFT_T(KC_QUOT), \
     CTL_T(KC_0),      KC_1,       KC_2,         KC_3,           KC_SPC,           KC_ASTR,    KC_EXLM,     KC_BSLS,    KC_SLSH,            KC_ENT, \
@@ -244,10 +244,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 */
 // clang-format on
- // Adding Trackpad
-
-#include "pointing_device.h"
-#include "drivers/sensors/cirque_pinnacle.h"
 
 #ifdef POINTING_DEVICE_ENABLE
 #    ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
@@ -275,6 +271,33 @@ void matrix_scan_user(void) {
     }
 }
 #    endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+
+// Add the new code here
+void keyboard_post_init_user(void) {
+    // Initialize Cirque trackpad on left side
+    if (is_keyboard_left()) {
+        cirque_pinnacle_init();
+    }
+}
+
+report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
+    // Process drag scroll mode if enabled
+    if (layer_state_is(LAYER_DUAL) && (left_report.buttons & (1 << 1))) {
+        left_report.h = left_report.x;
+        left_report.v = left_report.y;
+        left_report.x = 0;
+        left_report.y = 0;
+    }
+
+    // Optional: Adjust sensitivity for Cirque trackpad
+    if (is_keyboard_left()) {
+        left_report.x = (left_report.x * 3) / 4;
+        left_report.y = (left_report.y * 3) / 4;
+    }
+
+    // Combine reports from both devices
+    return pointing_device_combine_reports(left_report, right_report);
+}
 
 #    ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
 layer_state_t layer_state_set_user(layer_state_t state) {
