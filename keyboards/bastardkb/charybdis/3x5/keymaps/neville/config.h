@@ -66,17 +66,17 @@
 //#define CHARYBDIS_DRAGSCROLL_REVERSE_X
 #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
 
-// I2C Configuration
-#define I2C_DRIVER I2CD1
-#define I2C1_SCL_PIN D3
-#define I2C1_SDA_PIN D2
-#define I2C1_SCL_PAL_MODE 4
-#define I2C1_SDA_PAL_MODE 4
-#define I2C1_TIMINGR_PRESC 2U
-#define I2C1_TIMINGR_SCLDEL 1U
-#define I2C1_TIMINGR_SDADEL 0U
-#define I2C1_TIMINGR_SCLH 9U
-#define I2C1_TIMINGR_SCLL 26U
+// I2C Configuration for RP2040
+#define I2C_DRIVER I2C1
+#define I2C1_SDA_PIN GP2  // Use GP2 instead of D2
+#define I2C1_SCL_PIN GP3  // Use GP3 instead of D3
+
+// ChibiOS specific I2C settings
+#define I2C1_TIMINGR_PRESC   0U
+#define I2C1_TIMINGR_SCLDEL  3U
+#define I2C1_TIMINGR_SDADEL  1U
+#define I2C1_TIMINGR_SCLH    3U
+#define I2C1_TIMINGR_SCLL    9U
 
 // Cirque Trackpad Configuration
 #define CIRQUE_PINNACLE_ADDR 0x2A
