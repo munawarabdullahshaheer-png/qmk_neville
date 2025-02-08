@@ -9,14 +9,9 @@ POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = pmw3360
 SPLIT_POINTING_ENABLE = yes
 
-# Enable I2C for Cirque trackpad
+# Enable I2C
 I2C_DRIVER_ENABLE = yes
 
-# Enable Cirque Pinnacle
-SRC += drivers/sensors/cirque_pinnacle.c
-SRC += drivers/sensors/cirque_pinnacle_gestures.c
-QUANTUM_LIB_SRC += i2c_master.c
-
-# Optional: Debug settings
+# Debug options (uncomment if needed)
 # CONSOLE_ENABLE = yes
 # COMMAND_ENABLE = yes
