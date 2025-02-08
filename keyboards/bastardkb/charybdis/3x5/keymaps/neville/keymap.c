@@ -15,6 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
+#include "pointing_device.h"
+#include "drivers/sensors/cirque_pinnacle.h"
+#include "i2c_master.h"
+#include "split_util.h"
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #    include "timer.h"
@@ -272,15 +276,18 @@ void matrix_scan_user(void) {
 }
 #    endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
-// Add the new code here
 void keyboard_post_init_user(void) {
-    // Initialize Cirque trackpad on left side
     if (is_keyboard_left()) {
+        // Initialize I2C first
+        i2c_init();
+        // Then initialize Cirque trackpad
         cirque_pinnacle_init();
     }
 }
 
 report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
+    report_mouse_t report = {0};  // Initialize empty report
+
     // Process drag scroll mode if enabled
     if (layer_state_is(LAYER_DUAL) && (left_report.buttons & (1 << 1))) {
         left_report.h = left_report.x;
@@ -289,14 +296,20 @@ report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, re
         left_report.y = 0;
     }
 
-    // Optional: Adjust sensitivity for Cirque trackpad
+    // Adjust sensitivity for Cirque trackpad
     if (is_keyboard_left()) {
         left_report.x = (left_report.x * 3) / 4;
         left_report.y = (left_report.y * 3) / 4;
     }
 
-    // Combine reports from both devices
-    return pointing_device_combine_reports(left_report, right_report);
+    // Combine the reports manually
+    report.x = left_report.x + right_report.x;
+    report.y = left_report.y + right_report.y;
+    report.h = left_report.h + right_report.h;
+    report.v = left_report.v + right_report.v;
+    report.buttons = left_report.buttons | right_report.buttons;
+
+    return report;
 }
 
 #    ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
