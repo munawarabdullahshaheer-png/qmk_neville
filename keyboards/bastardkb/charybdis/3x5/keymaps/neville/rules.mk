@@ -11,5 +11,6 @@ CIRQUE_ENABLE = yes
 
 # Add required source files
 SRC += drivers/sensors/cirque_pinnacle.c
+SRC += drivers/sensors/pmw33xx_common.c
 SRC += pointing/cirque_pinnacle_common.c
-SRC += pointing/cirque_trackpad_logic.c
+SRC += pointing/pointing_device_driver.c

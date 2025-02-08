@@ -97,112 +97,50 @@ _______,    _______,    _______,            KC_BTN1,     KC_BTN2
 // clang-format on
 
 #ifdef POINTING_DEVICE_ENABLE
-#    ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
-if (abs(mouse_report.x) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD || abs(mouse_report.y) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD) {
-if (auto_pointer_layer_timer == 0) {
-layer_on(LAYER_POINTER);
-#        ifdef RGB_MATRIX_ENABLE
-rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
-rgb_matrix_sethsv_noeeprom(HSV_GREEN);
-#        endif // RGB_MATRIX_ENABLE
-}
-auto_pointer_layer_timer = timer_read();
-}
-return mouse_report;
-}
+void pointing_device_driver_init(void);
+report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report);
 
-void matrix_scan_user(void) {
-if (auto_pointer_layer_timer != 0 && TIMER_DIFF_16(timer_read(), auto_pointer_layer_timer) >= CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS) {
-auto_pointer_layer_timer = 0;
-layer_off(LAYER_POINTER);
-#        ifdef RGB_MATRIX_ENABLE
-rgb_matrix_mode_noeeprom(RGB_MATRIX_DEFAULT_MODE);
-#        endif // RGB_MATRIX_ENABLE
-}
-}
-#    endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
-
-#    ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
-layer_state_t layer_state_set_user(layer_state_t state) {
-charybdis_set_pointer_sniping_enabled(layer_state_cmp(state, CHARYBDIS_AUTO_SNIPING_ON_LAYER));
-return state;
-}
-#    endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER
-
-void pointing_device_init_kb(void) {
+void pointing_device_driver_init(void) {
     if (is_keyboard_left()) {
         cirque_pinnacle_init();
+    } else {
+        pmw33xx_init();
     }
-    pointing_device_init_user();
 }
 
-report_mouse_t pointing_device_task_kb(report_mouse_t mouse_report) {
+report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {
+    report_mouse_t local_report = {0};
+
     if (is_keyboard_left()) {
         // Left side - Cirque trackpad
-        mouse_report = cirque_pinnacle_get_report(mouse_report);
-        // Apply rotation and inversion
-        int8_t x = mouse_report.y;
-        int8_t y = -mouse_report.x;
-        mouse_report.x = x;
-        mouse_report.y = y;
+        local_report = cirque_pinnacle_get_report(mouse_report);
+
+        // Apply transformations for Cirque
+        mouse_report.x = local_report.y;  // Swap x/y for 90-degree rotation
+        mouse_report.y = -local_report.x;
+        mouse_report.buttons = local_report.buttons;
     } else {
         // Right side - PMW3360
-        mouse_report = pmw33xx_get_report(mouse_report);
-        // Invert X axis for right side
-        mouse_report.x = -mouse_report.x;
+        local_report = pmw33xx_get_report(mouse_report);
+        mouse_report.x = -local_report.x;  // Invert X axis
+        mouse_report.y = local_report.y;
+        mouse_report.buttons = local_report.buttons;
     }
 
-    pointing_device_handle_shared_button(&mouse_report);
-    pointing_device_handle_buttons(&mouse_report);
-    pointing_device_handle_scrolling(&mouse_report);
-
-    return pointing_device_task_user(mouse_report);
-}
-
-static void pointing_device_handle_shared_button(report_mouse_t* report) {
-    static uint16_t shared_button_timer = 0;
-    static bool shared_button_active = false;
-
-    if (timer_elapsed(shared_button_timer) > 100) {  // Adjust debounce time as needed
-        shared_button_active = false;
-    }
-
-    // Example of shared button handling - adjust as needed
-    if (!shared_button_active && (report->buttons & MOUSE_BTN1)) {
-        shared_button_timer = timer_read();
-        shared_button_active = true;
-    }
-}
-
-static void pointing_device_handle_buttons(report_mouse_t* report) {
-    // Add any button processing logic here
-    // For example, implementing drag-scroll toggle
-    static bool drag_scroll = false;
-    if (IS_LAYER_ON(LAYER_DUAL) && (report->buttons & MOUSE_BTN1)) {
-        drag_scroll = !drag_scroll;
-        report->buttons &= ~MOUSE_BTN1;  // Clear the button press
-    }
-}
-
-static void pointing_device_handle_scrolling(report_mouse_t* report) {
-    // Add scrolling behavior here
-    static bool scrolling = false;
-    if (IS_LAYER_ON(LAYER_DUAL)) {
-        scrolling = true;
-        report->h = report->x / 4;  // Adjust divisor to control scroll speed
-        report->v = report->y / 4;
-        report->x = 0;
-        report->y = 0;
-    } else {
-        scrolling = false;
-    }
-}
-
-// Optional: Implement this if you need custom user handling
-report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     return mouse_report;
 }
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    // Handle scrolling when in LAYER_DUAL
+    if (IS_LAYER_ON(LAYER_DUAL)) {
+        mouse_report.h = mouse_report.x / SCROLL_DIVISOR_H;
+        mouse_report.v = mouse_report.y / SCROLL_DIVISOR_V;
+        mouse_report.x = 0;
+        mouse_report.y = 0;
+    }
+    return mouse_report;
+}
+
 #endif
 
 #ifdef RGB_MATRIX_ENABLE
