@@ -9,4 +9,13 @@ POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = pmw3360
 POINTING_DEVICE_DRIVER_SECONDARY = cirque_pinnacle_i2c
 POINTING_DEVICE_SPLIT = yes
+
+# Enable Cirque Pinnacle driver
+CIRQUE_PINNACLE_ENABLE = yes
+
+# Enable I2C
 I2C_DRIVER_ENABLE = yes
+
+# Optional: Debug settings
+# CONSOLE_ENABLE = yes
+# COMMAND_ENABLE = yes
