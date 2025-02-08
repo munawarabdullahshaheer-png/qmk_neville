@@ -303,4 +303,4 @@ COMBO(btn1_btn2_btn3, KC_BTN3),
 COMBO(dot_ent_drgscrl, DRGSCRL),
 
 };
-~,
+~
