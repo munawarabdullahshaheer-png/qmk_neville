@@ -7,14 +7,15 @@ DYNAMIC_TAPPING_TERM_ENABLE = yes
 # Pointing device configuration
 POINTING_DEVICE_ENABLE = yes
 POINTING_DEVICE_DRIVER = pmw3360
-POINTING_DEVICE_DRIVER_SECONDARY = cirque_pinnacle_i2c
-POINTING_DEVICE_SPLIT = yes
+SPLIT_POINTING_ENABLE = yes
 
-# Enable Cirque Pinnacle driver
-CIRQUE_PINNACLE_ENABLE = yes
-
-# Enable I2C
+# Enable I2C for Cirque trackpad
 I2C_DRIVER_ENABLE = yes
+
+# Enable Cirque Pinnacle
+SRC += drivers/sensors/cirque_pinnacle.c
+SRC += drivers/sensors/cirque_pinnacle_gestures.c
+QUANTUM_LIB_SRC += i2c_master.c
 
 # Optional: Debug settings
 # CONSOLE_ENABLE = yes
