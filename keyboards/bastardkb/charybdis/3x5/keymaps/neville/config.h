@@ -66,17 +66,17 @@
 //#define CHARYBDIS_DRAGSCROLL_REVERSE_X
 #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
 
-// I2C Configuration for RP2040
-#undef I2C_DRIVER
-#define I2C_DRIVER I2C0
-#define I2C0_SDA_PIN GP2
-#define I2C0_SCL_PIN GP3
-#define I2C0_SDA_PAL_MODE 4
-#define I2C0_SCL_PAL_MODE 4
-
-// I2C timing configuration
-#define I2C0_CLOCK_SPEED 400000
-#define I2C0_DUTY_CYCLE FAST_DUTY_CYCLE_2
+// I2C Configuration
+#define I2C_DRIVER I2CD1
+#define I2C1_SCL_PIN D3
+#define I2C1_SDA_PIN D2
+#define I2C1_SCL_PAL_MODE 4
+#define I2C1_SDA_PAL_MODE 4
+#define I2C1_TIMINGR_PRESC 2U
+#define I2C1_TIMINGR_SCLDEL 1U
+#define I2C1_TIMINGR_SDADEL 0U
+#define I2C1_TIMINGR_SCLH 9U
+#define I2C1_TIMINGR_SCLL 26U
 
 // Cirque Trackpad Configuration
 #define CIRQUE_PINNACLE_ADDR 0x2A
