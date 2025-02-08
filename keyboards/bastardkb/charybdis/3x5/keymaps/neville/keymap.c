@@ -20,12 +20,7 @@
 #    include "timer.h"
 #endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
-#ifdef POINTING_DEVICE_ENABLE
-#    include "pointing_device.h"
-#    include "drivers/sensors/cirque_pinnacle.h"
-#    include "drivers/sensors/pmw33xx_common.h"
-#    include "pmw33xx_regs.h"
-#endif
+
 
 enum charybdis_keymap_layers {
 LAYER_BASE = 0,
@@ -73,7 +68,7 @@ CTL_T(KC_Z),      KC_X,       KC_C,        KC_V,      LGUI_T(KC_B),      RCMD_T(
 RAISE,    RAISE,   LOWER,           KC_BTN1,   KC_BTN2
 ),
 
-[LAYER_RAISE] = LAYOUT(
+[LAYER_RAISE] = LAYOUT( 
 KC_ESC,      KC_7,       KC_8,         KC_9,           KC_GRV,           KC_LPRN,    KC_RPRN,     KC_MINS,     KC_EQL,           KC_BSPC, \
 SFT_T(KC_TAB),      KC_4,       KC_5,         KC_6,          KC_LALT,            KC_DLR,    KC_AMPR,       KC_AT,    KC_SCLN,   RSFT_T(KC_QUOT), \
 CTL_T(KC_0),      KC_1,       KC_2,         KC_3,           KC_SPC,           KC_ASTR,    KC_EXLM,     KC_BSLS,    KC_SLSH,            KC_ENT, \
@@ -98,51 +93,39 @@ _______,    _______,    _______,            KC_BTN1,     KC_BTN2
 // clang-format on
 
 #ifdef POINTING_DEVICE_ENABLE
-void pointing_device_driver_init(void);
-report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report);
-
-void pointing_device_driver_init(void) {
-    if (is_keyboard_left()) {
-        cirque_pinnacle_init();
-    } else {
-        pmw33xx_init();
-    }
-}
-
-report_mouse_t pointing_device_driver_get_report(report_mouse_t mouse_report) {
-    report_mouse_t local_report = {0};
-
-    if (is_keyboard_left()) {
-        // Left side - Cirque trackpad
-        local_report = cirque_pinnacle_get_report(mouse_report);
-
-        // Apply transformations for Cirque
-        mouse_report.x = local_report.y;  // Swap x/y for 90-degree rotation
-        mouse_report.y = -local_report.x;
-        mouse_report.buttons = local_report.buttons;
-    } else {
-        // Right side - PMW3360
-        local_report = pmw33xx_get_report(mouse_report);
-        mouse_report.x = -local_report.x;  // Invert X axis
-        mouse_report.y = local_report.y;
-        mouse_report.buttons = local_report.buttons;
-    }
-
-    return mouse_report;
-}
-
+#    ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
-    // Handle scrolling when in LAYER_DUAL
-    if (IS_LAYER_ON(LAYER_DUAL)) {
-        mouse_report.h = mouse_report.x / SCROLL_DIVISOR_H;
-        mouse_report.v = mouse_report.y / SCROLL_DIVISOR_V;
-        mouse_report.x = 0;
-        mouse_report.y = 0;
-    }
-    return mouse_report;
+if (abs(mouse_report.x) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD || abs(mouse_report.y) > CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD) {
+if (auto_pointer_layer_timer == 0) {
+layer_on(LAYER_POINTER);
+#        ifdef RGB_MATRIX_ENABLE
+rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+rgb_matrix_sethsv_noeeprom(HSV_GREEN);
+#        endif // RGB_MATRIX_ENABLE
+}
+auto_pointer_layer_timer = timer_read();
+}
+return mouse_report;
 }
 
-#endif
+void matrix_scan_user(void) {
+if (auto_pointer_layer_timer != 0 && TIMER_DIFF_16(timer_read(), auto_pointer_layer_timer) >= CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS) {
+auto_pointer_layer_timer = 0;
+layer_off(LAYER_POINTER);
+#        ifdef RGB_MATRIX_ENABLE
+rgb_matrix_mode_noeeprom(RGB_MATRIX_DEFAULT_MODE);
+#        endif // RGB_MATRIX_ENABLE
+}
+}
+#    endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+
+#    ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
+layer_state_t layer_state_set_user(layer_state_t state) {
+charybdis_set_pointer_sniping_enabled(layer_state_cmp(state, CHARYBDIS_AUTO_SNIPING_ON_LAYER));
+return state;
+}
+#    endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER
+#endif     // POINTING_DEVICE_ENABLE
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in
