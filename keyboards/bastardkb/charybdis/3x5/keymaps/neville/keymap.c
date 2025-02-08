@@ -244,6 +244,41 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 */
 // clang-format on
+ // Adding Trackpad
+
+#include "pointing_device.h"
+#include "drivers/sensors/cirque_pinnacle.h"
+
+// Keep your existing layer definitions and keymaps
+
+#ifdef POINTING_DEVICE_ENABLE
+void keyboard_post_init_user(void) {
+    // Initialize Cirque trackpad on left side
+    if (is_keyboard_left()) {
+        cirque_pinnacle_init();
+    }
+}
+
+report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
+    // Process drag scroll mode if enabled
+    if (layer_state_is(LAYER_DUAL) && (left_report.buttons & (1 << 1))) {  // Check if on LAYER_DUAL and right button pressed
+        left_report.h = left_report.x;
+        left_report.v = left_report.y;
+        left_report.x = 0;
+        left_report.y = 0;
+    }
+
+    // Optional: Adjust sensitivity for Cirque trackpad
+    if (is_keyboard_left()) {
+        left_report.x = (left_report.x * 3) / 4;  // Reduce to 75%
+        left_report.y = (left_report.y * 3) / 4;
+    }
+
+    // Combine reports from both devices
+    return pointing_device_combine_reports(left_report, right_report);
+}
+
+ // End of trackpad code
 
 #ifdef POINTING_DEVICE_ENABLE
 #    ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
