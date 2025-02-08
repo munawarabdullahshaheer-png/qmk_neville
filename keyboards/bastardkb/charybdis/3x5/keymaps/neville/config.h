@@ -39,38 +39,13 @@
 /* Charybdis-specific features. */
 
 #ifdef POINTING_DEVICE_ENABLE
-    // Basic pointing device settings
-    #define POINTING_DEVICE_COMBINED
-    #define POINTING_DEVICE_LEFT_DRIVER cirque_pinnacle
-    #define POINTING_DEVICE_RIGHT_DRIVER pmw33xx
-    #define POINTING_DEVICE_TASK_THROTTLE_MS 1
-    #define POINTING_DEVICE_ROTATION_90
-    #define POINTING_DEVICE_ROTATION_90_RIGHT
-    #define POINTING_DEVICE_INVERT_Y
-
-    // Cirque trackpad config (left side)
-    #define I2C1_SCL_PIN GP15
-    #define I2C1_SDA_PIN GP14
-    #define I2C_DRIVER I2CD1
-    #define CIRQUE_PINNACLE_ADDR 0x2A
-    #define CIRQUE_PINNACLE_TAP_ENABLE
-    #define CIRQUE_PINNACLE_SECONDARY_TAP_ENABLE
-    #define CIRQUE_PINNACLE_POSITION_MODE CIRQUE_PINNACLE_ABSOLUTE_MODE
-    #define CIRQUE_PINNACLE_DIAMETER_MM 40
-    #define CIRQUE_PINNACLE_CURVED_OVERLAY
-
-    // PMW3360 config (right side)
-    // Use the default SPI pins from the base config
-    #define PMW33XX_CS_PIN GP17  // Only define CS pin, use default SPI pins
-    #define PMW33XX_CPI 2000
-    #define PMW33XX_CPI_STEP 100
-    #define PMW33XX_CPI_MIN 100
-    #define PMW33XX_CPI_MAX 12000
-
-    // Scrolling settings
-    #define SCROLL_DIVISOR_H 4
-    #define SCROLL_DIVISOR_V 4
-#endif
+#define POINTING_DEVICE_SCROLL_ENABLE
+#define POINTING_DEVICE_INVERT_V
+// Automatically enable the pointer layer when moving the trackball.  See also:
+// - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS`
+// - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD`
+// #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+#endif // POINTING_DEVICE_ENABLE
 
 #define COMBO_COUNT 3 // Change this number.
 #define COMBO_TERM 120
@@ -90,8 +65,3 @@
 
 //#define CHARYBDIS_DRAGSCROLL_REVERSE_X
 #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
-
-// PMW3360 specific settings (if not already defined)
-#ifndef PMW33XX_CS_PIN
-    #define PMW33XX_CS_PIN GP21  // Adjust pin as needed
-#endif
