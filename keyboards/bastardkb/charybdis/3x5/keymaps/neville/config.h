@@ -60,11 +60,8 @@
     #define CIRQUE_PINNACLE_CURVED_OVERLAY
 
     // PMW3360 config (right side)
-    #define SPI_DRIVER SPID0
-    #define SPI_SCK_PIN GP18
-    #define SPI_MISO_PIN GP16
-    #define SPI_MOSI_PIN GP19
-    #define PMW33XX_CS_PIN GP17
+    // Use the default SPI pins from the base config
+    #define PMW33XX_CS_PIN GP17  // Only define CS pin, use default SPI pins
     #define PMW33XX_CPI 2000
     #define PMW33XX_CPI_STEP 100
     #define PMW33XX_CPI_MIN 100

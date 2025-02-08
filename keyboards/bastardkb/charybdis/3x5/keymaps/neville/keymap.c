@@ -24,6 +24,7 @@
 #    include "pointing_device.h"
 #    include "drivers/sensors/cirque_pinnacle.h"
 #    include "drivers/sensors/pmw33xx_common.h"
+#    include "pmw33xx_regs.h"
 #endif
 
 enum charybdis_keymap_layers {
