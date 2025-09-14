@@ -36,17 +36,33 @@
 #define NO_ACTION_ONESHOT
 #endif // __arm__
 
-/* Charybdis-specific features. */
+/* --- Charybdis-specific + pointing device features --- */
 
 #ifdef POINTING_DEVICE_ENABLE
-#define POINTING_DEVICE_SCROLL_ENABLE
-#define POINTING_DEVICE_INVERT_V
-// Automatically enable the pointer layer when moving the trackball.  See also:
-// - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS`
-// - `CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_THRESHOLD`
-// #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+    // existing pointer settings
+    #define POINTING_DEVICE_SCROLL_ENABLE
+    #define POINTING_DEVICE_INVERT_V
+    // Automatically enable the pointer layer when moving the trackball.  See also:
+    // #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 #endif // POINTING_DEVICE_ENABLE
 
+/* >>> ADDED: combined pointing device flags <<< */
+#define SPLIT_POINTING_ENABLE
+#define POINTING_DEVICE_COMBINED
+#define EE_HANDS           // or comment out and use MASTER_LEFT/MASTER_RIGHT explicitly
+
+/* >>> ADDED: Cirque trackpad placeholders <<< */
+#define CIRQUE_PINNACLE_DIAMETER_MM 40
+// #define CIRQUE_PINNACLE_TAP_ENABLE
+
+/* >>> ADDED: PMW33xx (PMW3360) placeholders <<< */
+#define PMW33XX_CS_PIN B5      // change to your actual CS pin
+#define PMW33XX_CPI 1600       // default CPI; adjust as needed
+
+/* optional debug output */
+#define POINTING_DEVICE_DEBUG
+
+/* combos, layers, RGB etc. — your existing settings */
 #define COMBO_COUNT 3 // Change this number.
 #define COMBO_TERM 120
 
