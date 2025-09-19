@@ -5,7 +5,7 @@ VIA_ENABLE = yes
 MOUSEKEY_ENABLE = yes
 
 # Enable combo feature
-COMBO_ENABLE = yes
+COMBO_ENABLE = no
 
 # Disable tap dance
 TAP_DANCE_ENABLE = no
